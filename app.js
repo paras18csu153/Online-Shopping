@@ -4,10 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index.route');
+var usersRouter = require('./routes/user.route');
 
 var app = express();
+const mongoose = require("mongoose");
+var url="mongodb+srv://ps_2708:Ps12111994@development-a0abs.mongodb.net/test?retryWrites=true&w=majority"
+mongoose.Promise = global.Promise;
+// Connecting to the database
+mongoose
+  .connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Successfully connected to the database");
+  })
+  .catch(err => {
+    console.log("Could not connect to the database. Exiting now...", err);
+    process.exit();
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
